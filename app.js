@@ -79,5 +79,25 @@ function asignarCurso() {
         consola.innerHTML = `<div class="alert alert-danger"><strong>⚠️ Error de Superposición:</strong> Conflicto detectado. El sistema no se truncó, intenta otro horario.</div>`;
     }
 }
+// Función para eliminar un curso específico
+function eliminarCurso(id) {
+    // Confirmación visual antes de borrar
+    if (confirm("¿Estás seguro de que deseas eliminar este curso?")) {
+        // Filtrar el arreglo para quitar el curso con el ID proporcionado
+        cursosAsignados = cursosAsignados.filter(c => c.id !== id);
+        
+        // Guardar la nueva lista en localStorage
+        localStorage.setItem('cursos', JSON.stringify(cursosAsignados));
+        
+        // Si estamos en la página de horarios, recargamos la tabla
+        if (typeof renderizarTabla === 'function') {
+            renderizarTabla();
+        } else {
+            // Si estamos en el index, solo notificamos
+            alert("Curso eliminado correctamente.");
+        }
+    }
+}
+
 actualizarVistaAulas();
 
